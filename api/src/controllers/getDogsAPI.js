@@ -1,7 +1,8 @@
 
 const axios = require('axios');
 const URL = 'https://api.thedogapi.com/v1/breeds'
-const getDogsName = require('./getDogsByName')
+
+
 
 const getDogsAPI = async (req, res) => {
   
@@ -26,7 +27,7 @@ const getDogsAPI = async (req, res) => {
       breed_group: dog.breed_group,
     }));
 
-    res.status(200).json(allDogs);
+    return allDogs
 
   } catch (error) {
     res.status(500).json({ error: error.message });

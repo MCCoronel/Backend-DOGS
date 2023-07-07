@@ -1,19 +1,16 @@
 const { APIKey } = process.env;
 const axios = require ('axios');
 const URL = `https://api.thedogapi.com/v1/breeds?api_key=${APIKey}`;
+const getAllDogs = require('./getAllDogs')
 //const getDogsAPI = require('./getDogsAPI')
 
 
 const getDogsName = async (req,res) => {
     const name = req.query.name;
     try {
-        const API = await axios(URL);
-  
-        if (!API || !API.data) {
-          throw new Error("Can't get dog information");
-        }
+        const allDogs = await getAllDogs();
 
-        let dogsName = await API.data.filter( dog => {
+        let dogsName = await allDogs.filter( dog => {
           return dog.name.toLowerCase().includes(name.toLowerCase())
         })
 

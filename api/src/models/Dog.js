@@ -18,17 +18,45 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    height: {
-      type: DataTypes.STRING,
+    minHeight: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
       allowNull: false,
     },
-    weight: {
-      type: DataTypes.STRING,
+    maxHeight: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
       allowNull: false,
     },
-    life_span: {
+    minWeight: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
+      allowNull: false,
+    },
+    maxWeight: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
+      allowNull: false,
+    },
+    minLifeSpan: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 20 },
+      allowNull: false,
+    },
+    maxLifeSpan: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 20 },
+      allowNull: false,
+    },
+    breed_group:{
       type: DataTypes.STRING,
       allowNull: true,
     },
+    bred_for:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
+  },{
+    timestamps: false,
   });
 };
