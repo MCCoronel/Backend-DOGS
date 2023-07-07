@@ -1,18 +1,15 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define(
+  return sequelize.define(
     "temperament",
-    {  id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
-    },
+    {
       name: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false,
       },
     }, //no hace falta poner el id, sequelize lo hace automático
-    { timestamps: false }
-  );
+    { timestamps: false }
+  );
 };
