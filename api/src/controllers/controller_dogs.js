@@ -23,9 +23,8 @@ const getAllDogs = async () => {
     },
   });
 
-  console.log(dbData);
-
   return [...dogsAPI, ...dbData];
+
 };
 
 const getDogsByName = async (name) => {
@@ -67,9 +66,9 @@ const createDog = async (
 ) => {
   let dogs = await getAllDogs();
 
-  let found = dogs.find((dog) => dog.name.toLowerCase() === name.toLowerCase());
+  let foundDog = dogs.find((dog) => dog.name.toLowerCase() === name.toLowerCase());
 
-  if (found) throw new Error(`The breed ${name} already exists`);
+  if (foundDog) throw new Error(`The breed ${name} already exists`);
 
   const newDog = await Dog.create({
     name,
@@ -84,19 +83,14 @@ const createDog = async (
   
   await newDog.addTemperaments(temperaments);
   
-  let dog = await Dog.findAll({
-    where: {
-      id: newDog.id,
-    },
-    include: {
-      model: Temperament,
-    },
-  })
+  let dog = await Dog.findByPk(newDog.id);
+  let dogTemperaments = await dog.getTemperaments();
+  let temperamentsNames = dogTemperaments.map((temperament) => temperament.name);
 
-  console.log(dog);
-
-  return dog;
+  return { ...dog.toJSON(), temperaments: temperamentsNames };
 };
+
+
 
 module.exports = {
   getAllDogs,

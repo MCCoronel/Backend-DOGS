@@ -1,6 +1,6 @@
 const { url } = require("inspector");
 const { Temperament } = require("../models");
-const { URL, API_KEY } = require("../utils/config");
+const { URL} = require("../utils/config");
 const axios = require("axios");
 
 const chargeTemperamentsToDB = async () => {

@@ -60,7 +60,7 @@ const postDog = async (req, res) => {
         maxLifeSpan,
         temperaments
       );
-
+       
       res.status(201).json(newDog);
     } catch (error) {
       // Capturar el error cuando el perro ya existe
