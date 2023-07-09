@@ -44,6 +44,7 @@ const postDog = async (req, res) => {
       minLifeSpan,
       maxLifeSpan,
       temperaments,
+      breed_group
     } = req.body;
 
     validateDogCreationFields(req.body);
@@ -58,10 +59,11 @@ const postDog = async (req, res) => {
         maxWeight,
         minLifeSpan,
         maxLifeSpan,
-        temperaments
+        temperaments,
+        breed_group
       );
        
-      res.status(201).json(newDog);
+      res.status(201).json({message: `The breed ${name} created successfully`});
     } catch (error) {
       // Capturar el error cuando el perro ya existe
       if (error.message.startsWith("The")) {

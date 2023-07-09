@@ -2,6 +2,7 @@ const { Dog, Temperament } = require("../models");
 const { URL, API_KEY } = require("../utils/config");
 const axios = require("axios");
 
+
 const getAllDogs = async () => {
   let apiData = await axios.get(URL + "?api_key=" + API_KEY);
 
@@ -19,13 +20,45 @@ const getAllDogs = async () => {
   let dbData = await Dog.findAll({
     include: {
       model: Temperament,
+      through:{attributes:[]},
       attributes: ["name"],
     },
   });
 
-  return [...dogsAPI, ...dbData];
+  dbData = dbData.map((dog) => {
+    const {
+      id,
+      name,
+  image,
+  minHeight,
+  maxHeight,
+  minWeight,
+  maxWeight,
+  minLifeSpan,
+  maxLifeSpan,
+  temperaments,
+  breed_group
+    } = dog.toJSON();
+    return {
+      id,
+      name,
+      image,
+      minHeight,
+      maxHeight,
+      minWeight,
+      maxWeight,
+      minLifeSpan,
+      maxLifeSpan,
+      temperament: [...temperaments.map((t) => t.name)], // Crear una nueva propiedad "temperament" y asignarle los temperamentos unidos en una cadena
+      breed_group
+    };
+  });
 
+  const allDogs = [...dogsAPI, ...dbData];
+
+  return allDogs;
 };
+
 
 const getDogsByName = async (name) => {
   let apiData = await axios.get(URL + "/search?q=" + name);
@@ -62,7 +95,8 @@ const createDog = async (
   maxWeight,
   minLifeSpan,
   maxLifeSpan,
-  temperaments
+  temperaments,
+  breed_group
 ) => {
   let dogs = await getAllDogs();
 
@@ -79,6 +113,7 @@ const createDog = async (
     maxWeight,
     minLifeSpan,
     maxLifeSpan,
+    breed_group
   });
   
   await newDog.addTemperaments(temperaments);
