@@ -59,32 +59,57 @@ const getAllDogs = async () => {
   return allDogs;
 };
 
-
 const getDogsByName = async (name) => {
-  let apiData = await axios.get(URL + "/search?q=" + name);
+  const allDogs = await getAllDogs();
 
-  let dbData = await Dog.findAll({
-    where: {
-      name: name,
-    },
+  const breedsByName = await allDogs.filter((breed)=>{
+   return breed.name.toLowerCase() === name.toLowerCase()
   });
 
-  return [...apiData.data, ...dbData];
-};
+  if(!breedsByName.length)throw new Error(`There is no ${name} breed`);
+
+  return breedsByName;
+}
+
+// const getDogsByName = async (name) => {
+//   let apiData = await axios.get(URL + "/search?q=" + name);
+
+//   let dbData = await Dog.findAll({
+//     where: {
+//       name: name,
+//     },
+//   });
+
+//   return [...apiData.data, ...dbData];
+// };
 
 const getDogsByID = async (id) => {
-  let auxID = Number(id);
+  const allDogs = await getAllDogs();
 
-  if (typeof auxID === "number") {
-    let apiData = await axios.get(URL);
-    let dogFiltered = apiData.data.filter((eachDog) => eachDog.id === auxID);
-    return dogFiltered;
-  } else {
-    let dbData = await Dog.findByPk(id);
-    if (!dbData) return [];
-    return dbData;
-  }
+  const breedsByID = await allDogs.filter((breed)=>{
+   return breed.id == id
+  });
+
+  if(!breedsByID.length)throw new Error(`There is no ${id} breed`);
+
+  return breedsByID;
+
+
 };
+
+// const getDogsByID = async (id) => {
+//   let auxID = Number(id);
+
+//   if (typeof auxID === "number") {
+//     let apiData = await axios.get(URL);
+//     let dogFiltered = apiData.data.filter((eachDog) => eachDog.id === auxID);
+//     return dogFiltered;
+//   } else {
+//     let dbData = await Dog.findByPk(id);
+//     if (!dbData) return [];
+//     return dbData;
+//   }
+// };
 
 const createDog = async (
   name,

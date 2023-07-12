@@ -63,7 +63,7 @@ const postDog = async (req, res) => {
         breed_group
       );
        
-      res.status(201).json({message: `The breed ${name} created successfully`});
+      res.status(201).json(newDog);
     } catch (error) {
       // Capturar el error cuando el perro ya existe
       if (error.message.startsWith("The")) {
