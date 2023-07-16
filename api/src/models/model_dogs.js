@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       name: {
@@ -58,7 +58,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      api_db: {
+      db: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false,

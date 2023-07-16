@@ -12,7 +12,15 @@ const getDogs = async (req, res) => {
       res.status(200).json(allDogs);
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      let status;
+      if (error.message.startsWith("There")) {
+        status=404;
+        res.status(status).json({ error: error.message });
+      }else{
+        status = 500
+        res.status(status).json({ error: error.message });
+      }
+    // res.status(500).json({ error: error.message });
   }
 };
 
@@ -78,8 +86,22 @@ const postDog = async (req, res) => {
   }
 };
 
+const getBreedsFilteredByTemp = async(req,res)=>{
+  try {
+    const {temperament} = req.query
+    const dogs = await controllerDogs.breedsFilteredByTemp(temperament);
+    res.status(200).json(dogs);
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+
+    
+  }
+
+}
 module.exports = {
   getDogs,
   getDogsById,
   postDog,
+  getBreedsFilteredByTemp
 };
