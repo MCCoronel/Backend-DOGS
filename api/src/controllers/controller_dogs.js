@@ -27,6 +27,7 @@ const getAllDogs = async () => {
       attributes: ["name"],
     },
   });
+  
   dbData = dbData?.map((dog) => {
     let mappedDog = {
       ...dog.dataValues,
@@ -53,17 +54,6 @@ const getDogsByName = async (name) => {
   return breedsByName;
 };
 
-// const getDogsByName = async (name) => {
-//   let apiData = await axios.get(URL + "/search?q=" + name);
-
-//   let dbData = await Dog.findAll({
-//     where: {
-//       name: name,
-//     },
-//   });
-
-//   return [...apiData.data, ...dbData];
-// };
 
 const getDogsByID = async (id) => {
   const allDogs = await getAllDogs();
@@ -76,20 +66,6 @@ const getDogsByID = async (id) => {
 
   return breedsByID;
 };
-
-// const getDogsByID = async (id) => {
-//   let auxID = Number(id);
-
-//   if (typeof auxID === "number") {
-//     let apiData = await axios.get(URL);
-//     let dogFiltered = apiData.data.filter((eachDog) => eachDog.id === auxID);
-//     return dogFiltered;
-//   } else {
-//     let dbData = await Dog.findByPk(id);
-//     if (!dbData) return [];
-//     return dbData;
-//   }
-// };
 
 const createDog = async (
   name,
