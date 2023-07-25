@@ -9,6 +9,6 @@ router.get("/:id", handlersDogs.getDogsById);
 
 router.post("/", handlersDogs.postDog);
 
-//router.get("/", handlersDogs.getBreedsFilteredByTemp);
+router.put("/", handlersDogs.getBreedsFilteredByTemp);
 
 module.exports = router;
